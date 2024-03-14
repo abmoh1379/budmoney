@@ -1,0 +1,20 @@
+.button--primary{
+    background: var(--PRIMARY-COLOR-TINT-LVL5);
+    color: var(--GRAY-COLOR-SHADE-LVL1);
+    font-size : var(--FONT-MEDIUM-V2);
+    padding: var(--EXTRA-SMALL-SIZE) var(--SMALL-SIZE);
+}
+
+.button--primary:hover,
+.button--primary:focus{
+    background: var(--PRIMARY-COLOR-TINT-LVL4);
+    color: #fff;
+}
+
+.button--primary:focus {
+    box-shadow: var(--BOX-SHADOW-PRIMARY-FOCUS);
+} 
+
+.button--flex-align-stretch {
+    align-self: stretch;
+}

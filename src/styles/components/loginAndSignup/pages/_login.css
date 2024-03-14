@@ -1,0 +1,31 @@
+.app-login {
+  min-height: 100vh;
+  background: linear-gradient(
+    to right,
+    var(--PRIMARY-COLOR-TINT-LVL5),
+    var(--PRIMARY-COLOR-TINT-LVL4)
+  );
+  padding: var(--SMALL-SIZE) var(--MEDIUM-SIZE);
+}
+.app-login__header {
+    margin-bottom: var(--SMALL-SIZE);
+}
+.app-login__title {
+    color: var(--GRAY-COLOR-SHADE-LVL1);
+    font-weight: var(--FONT-WEIGHT-BOLDER);
+}
+.app-login__title-link {
+}
+
+
+.app-login__title-link:any-link {
+    text-decoration: none;
+    color: var(--GRAY-COLOR-SHADE-LVL1);
+    font-weight: var(--FONT-WEIGHT-BOLDER);
+    font-size: var(--FONT-LARGE-V2);
+}
+
+.app-login__title-link:active,
+.app-login__title-link:hover{
+    /* no effects needed */
+}

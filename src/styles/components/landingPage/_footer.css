@@ -1,0 +1,35 @@
+.landing-footer {
+}
+
+.landing-footer__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--SMALL-SIZE);
+  align-items: flex-start;
+  color: var(--GRAY-COLOR-TINT-LVL5);
+}
+
+.landing-footer__contact-title {
+  font-size: var(--FONT-MEDIUM-V2);
+  color: var(--GRAY-COLOR-TINT-LVL1);
+  font-weight: var(--FONT-WEIGHT-BOLD);
+  /* added extra margin-bottom to title to match other titles in the footer. */
+  margin-bottom: var(--SMALL-SIZE);
+}
+
+.landing-footer__address {
+    font-size: var(--FONT-SMALL);
+}
+
+.landing-footer__contact-link:any-link {
+  text-decoration: none;
+  color: inherit;
+  font-size: var(--FONT-MEDIUM-V1);
+  transition: var(--LINK-TRANSITION);
+}
+
+.landing-footer__contact-link:active,
+.landing-footer__contact-link:focus,
+.landing-footer__contact-link:hover {
+    color: var(--GRAY-COLOR-TINT-LVL1);
+}

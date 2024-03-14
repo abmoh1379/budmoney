@@ -1,0 +1,12 @@
+.button{
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: var(--FONT-WEIGHT-BOLDER);
+    transition: var(--BUTTON-TRANSITION);
+
+    /* to center the loader in btns */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

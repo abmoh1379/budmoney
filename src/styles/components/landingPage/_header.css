@@ -1,0 +1,182 @@
+.landing-header {
+  background: var(--GRAY-COLOR-TINT-LVL1);
+  /* min height becuase of sticky */
+  min-height: 10vh;
+  /* relative position for hamburger menu list */
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  /* the hamubrger menu list is 1000 */
+  z-index: 999;
+}
+
+.landing-header__title {
+  color: var(--GRAY-COLOR-SHADE-LVL1);
+  font-size: var(--FONT-LARGE-V2);
+  font-weight: var(--FONT-WEIGHT-BOLDER);
+}
+
+.landing-header__title-link:any-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.landing-header__title-link:active,
+.landing-header__title-link:hover {
+  /* no effect at all. */
+}
+
+.landing-header__hamburger-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  transition: var(--BUTTON-TRANSITION);
+}
+
+.landing-header__hamburger-btn:hover,
+.landing-header__hamburger-btn:focus {
+  transform: scale(1.2);
+}
+
+.landing-header__hamburger-btn:focus {
+  box-shadow: var(--BOX-SHADOW-PRIMARY-FOCUS);
+}
+
+.landing-header__hamburger-svg {
+  color: var(--GRAY-COLOR-SHADE-LVL1);
+  font-size: var(--FONT-LARGE-V2);
+}
+
+/* we are not display : none; the hamubrger list, because of screen readers and seo. */
+.landing-header .landing-header__list {
+  /* position fixed due making scrolling ineffective */
+  position: fixed;
+  top: 0;
+  left: 100%;
+  opacity: 0;
+  z-index: 1000;
+  height: 100vh;
+  width: 100vw;
+  background: var(--GRAY-COLOR-TINT-LVL1);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6.2rem;
+
+  transition: all 0.4s ease-in-out;
+}
+
+/* if the user clicks the hamburger menu icon, the header will get the show-list class and list will apply these styles. */
+.landing-header.show-list .landing-header__list {
+  left: 0;
+  opacity: 1;
+}
+.landing-header__list-nav-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4.8rem;
+}
+.landing-header__cross-btn {
+  /* relative to landing-header, because list itself is a position = absolute;*/
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--BUTTON-TRANSITION);
+}
+
+.landing-header__cross-btn:hover,
+.landing-header__cross-btn:focus {
+  transform: scale(1.2);
+}
+
+.landing-header__cross-btn:focus {
+  box-shadow: var(--BOX-SHADOW-PRIMARY-FOCUS);
+}
+
+.landing-header__cross-svg {
+  color: var(--GRAY-COLOR-SHADE-LVL1);
+  font-size: var(--FONT-LARGE-V2);
+}
+
+.landing-header__list-item {
+  list-style: none;
+}
+
+.landing-header__list-item-link {
+  text-decoration: none;
+
+  /* to make the links become full height of header, for activeClassname setup */
+  display: inline-block;
+  height: 100%;
+  color: var(--GRAY-COLOR-SHADE-LVL2);
+  font-size: var(--FONT-LARGE-V1);
+  font-weight: var(--FONT-WEIGHT-BOLD);
+  transition: var(--LINK-TRANSITION);
+  cursor: pointer;
+
+  /* to center text in links! */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-header__list-item-link:hover {
+  color: var(--PRIMARY-COLOR-SHADE-LVL5);
+}
+.landing-header__list-item-link.landing-header__list-item-link--active {
+  border-bottom: 4px solid var(--PRIMARY-COLOR);
+}
+
+@media only screen and (min-width: 768px) {
+  .landing-header__hamburger-btn,
+  .landing-header__cross-btn{
+    
+    position: fixed;
+    top: 0;
+    left: 150%;
+  }
+
+  .landing-header .landing-header__list {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 10vh;
+    opacity: 1;
+    flex-direction: row;
+    gap: 4.8rem;
+
+    /* this stretch value is needed to make the list items take full height for activeClassname style */
+    align-items: stretch;
+  }
+
+  .landing-header__list-nav-links {
+    flex-direction: row;
+    flex-grow: 1;
+  }
+
+  .landing-header__list-item {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* WE NEED LINKS to be bigger fontsize in hamburger menu but smaller without hamburger menu */
+  .landing-header__list-item-link {
+    font-size: var(--FONT-MEDIUM-V2);
+  }
+}

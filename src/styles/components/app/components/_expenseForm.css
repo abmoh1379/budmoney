@@ -1,0 +1,68 @@
+.app-expense-form{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: var(--SMALL-SIZE);
+}
+
+.app-expense-form__input-container{
+    display: flex;
+    flex-direction: column;
+    gap: var(--EXTRA-SMALL-SIZE);
+    align-items: flex-start;
+    width: 100%;
+}
+
+.app-expense-form__input{
+    padding: var(--SMALL-SIZE);
+    border-radius: 5px;
+    border: 2px solid var(--GRAY-COLOR-SHADE-LVL4);
+    font-size: var(--FONT-MEDIUM-V1);
+    outline: none;
+    width: 100%;
+}
+
+.app-expense-form--invalid-input {
+    border: 2px solid var(--ERROR-COLOR);
+}
+
+.app-expense-form__input:focus,
+.app-expense-form__textarea:focus{
+    outline: 2px solid var(--GRAY-COLOR-TINT-LVL5);
+}
+
+
+.app-expense-form__input-error{
+    color: var(--ERROR-COLOR);
+    font-size: var(--FONT-MEDIUM-V1);
+    font-weight: var(--FONT-WEIGHT-BOLD);
+    padding-left: var(--SMALL-SIZE);
+}
+
+.app-expense-form__textarea{
+    padding: var(--SMALL-SIZE);
+    border-radius: 5px;
+    border: 1px solid var(--GRAY-COLOR-SHADE-LVL4);
+    font-size: var(--FONT-MEDIUM-V1);
+    outline: none;
+    width: 100%;
+}
+.app-expense-form__btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--MEDIUM-SIZE);
+}
+
+
+/* this media query is there only for fixing the btns taking the whole width of form. we onlyt have 1 450px media query. */
+@media only screen and (min-width : 450px) {
+    .app-expense-form__btn-container{
+        flex-direction: row;
+    }
+}
+@media only screen and (min-width : 576px) {
+    .app-expense-form{
+        /* for fixing the btn to not take the full width of form. */
+        justify-items: start;
+    }
+
+}

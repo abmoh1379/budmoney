@@ -1,0 +1,43 @@
+.app-expenses{
+    margin-top: var(--SMALL-SIZE);
+}
+.app-expenses__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--GRAY-COLOR-SHADE-LVL1);
+    padding: var(--SMALL-SIZE);
+    border: 1px solid var(--GRAY-COLOR-SHADE-LVL4);
+    width: 100%;
+}
+.app-expenses__header-title{
+    font-size: var(--FONT-MEDIUM-V2);
+}
+
+.app-expenses__list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.app-expenses__list-paragraph {
+    font-weight: var(--FONT-WEIGHT-BOLD);
+    font-size: var(--FONT-MEDIUM-V2);
+    margin-top: var(--LARGE-SIZE);
+}
+
+.app-expenses__loader-container {
+    margin-top: var(--LARGE-SIZE);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--SMALL-SIZE);
+}
+
+.app-expenses__loader-paragraph {
+    font-weight: var(--FONT-WEIGHT-BOLD);
+    font-size: var(--FONT-MEDIUM-V1);
+}

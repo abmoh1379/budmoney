@@ -1,0 +1,129 @@
+.container {
+    margin: 0 auto;
+
+    padding: 0 var(--LARGE-SIZE);
+}
+
+.container--landing-header {
+    max-width: 120rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    min-height: 10vh;
+}
+
+.container--landing-hero {
+    max-width: 120rem;
+    /* we use 90, becauwe we have a fixed height of 10vh to header */
+    min-height: 90vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.container--landing-info {
+    max-width: 120rem;
+    /* we use these 2 paddings to not overwrite left and right value on overall .container */
+    min-height: 100vh;
+    padding-top: var(--EXTRA-LARGE-SIZE);
+    padding-bottom: var(--EXTRA-LARGE-SIZE);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--EXTRA-LARGE-SIZE);
+}
+
+.container--landing-services {
+    max-width: 120rem;
+     /* we use these 2 paddings to not overwrite left and right value on overall .container */
+    padding-top: var(--EXTRA-LARGE-SIZE);
+    padding-bottom: var(--EXTRA-LARGE-SIZE);
+
+    display: flex;
+    flex-direction: column;
+    /* 6.2rem is exception for here, no need variable! */
+    gap: 6.2rem;
+    align-items: center;
+}
+
+.container--landing-footer {
+    max-width: 120rem;
+     /* we use these 2 paddings to not overwrite left and right value on overall .container */
+    padding-top: var(--EXTRA-LARGE-SIZE);
+    padding-bottom: var(--EXTRA-LARGE-SIZE);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: var(--LARGE-SIZE);
+}
+
+
+.container--app-header {
+    max-width: 90rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-top: var(--MEDIUM-SIZE);
+    padding-bottom: var(--MEDIUM-SIZE);
+}
+
+.container--app-nav {
+    max-width: 90rem;
+    padding-top: var(--LARGE-SIZE);
+    padding-bottom: var(--LARGE-SIZE);
+}
+
+.container--expenses-filters {
+    max-width: 90rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: var(--SMALL-SIZE);
+    justify-items: start;
+    align-items: center;
+}
+
+.container--app-expenses-list {
+    max-width: 90rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container--app-add-expense {
+    max-width: 90rem;
+}
+
+.container--app-edit-expense {
+    max-width: 90rem;
+}
+
+@media only screen and (min-width : 576px){
+    .container--expenses-filters{
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: var(--MEDIUM-SIZE);
+        justify-items: start;
+    }
+} 
+
+
+@media only screen and (min-width : 768px) {
+    .container--landing-header {
+        gap: 3.2rem;
+    }
+
+    .container--landing-info {
+        flex-direction: row;
+    } 
+
+    .container--landing-footer {
+        grid-template-columns: 1fr 1fr 2fr;
+        row-gap: 0px;
+        column-gap: var(--LARGE-SIZE);
+        justify-items: center;
+    }
+}
+

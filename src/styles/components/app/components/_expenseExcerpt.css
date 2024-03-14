@@ -1,0 +1,100 @@
+.app-expense__list-item {
+  border-bottom: 1px solid var(--GRAY-COLOR-SHADE-LVL4);
+  width: 100%;
+  animation-name: expense-list-item-animation;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-delay: 0.25s;
+}
+
+@keyframes expense-list-item-animation {
+  0%{
+    transform: translateX(60px);
+  }
+  25%{
+    transform: translateX(-30px);
+  }
+  50% {
+    transform: translateX(30px);
+  }
+  75%{
+    transform: translateX(-15px);
+  } 
+  100%{
+    transform: translateX(0px);
+  }
+}
+
+
+.app-expense__list-item:last-child {
+  border-bottom: none;
+}
+
+.app-expense__item-link:any-link {
+  display: flex; /* to make the link take left and right padding and we need to give link the padding due to the border-bottom extending to all expenseList list.*/
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  padding: var(--SMALL-SIZE);
+  transition: var(--LINK-TRANSITION);
+}
+
+.app-expense__item-link:active,
+.app-expense__item-link:focus,
+.app-expense__item-link:hover {
+  background: var(--GRAY-COLOR-SHADE-LVL1);
+}
+
+.app-expense__text-details {
+
+}
+.app-expense__description {
+  margin-bottom: 0.2rem;
+  font-weight: var(--FONT-WEIGHT-BOLD);
+  font-size: var(--FONT-MEDIUM-V2);
+}
+.app-expense__type {
+  margin-bottom: var(--SMALL-SIZE);
+  font-weight: var(--FONT-WEIGHT-BOLDER);
+  font-size: var(--FONT-MEDIUM-V1);
+}
+.app-expense__type--housing{
+  color: rgb(0, 110, 255);
+}
+.app-expense__type--transportation{
+  color: rgb(255, 123, 0);
+}
+.app-expense__type--health-care{
+  color: rgb(76, 13, 177);
+}
+.app-expense__type--grocery{
+  color: rgb(12, 121, 12);
+}
+.app-expense__type--utility{
+  color: rgb(3, 169, 3);
+}
+.app-expense__type--entertainment{
+  color:  rgb(255, 185, 54);
+}
+.app-expense__type--product{
+  color: rgb(248, 17, 17);
+}
+.app-expense__type--service{
+  color: rgb(197, 60, 197);
+}
+.app-expense__type--others{
+  color: #8d8484ef;
+}
+.app-expense__date {
+    font-size: var(--FONT-MEDIUM-V1);
+    font-weight: var(--FONT-WEIGHT-LIGHT);
+    font-style: italic;
+}
+
+.app-expense__item-amount {
+    font-size: var(--FONT-MEDIUM-V2);
+}

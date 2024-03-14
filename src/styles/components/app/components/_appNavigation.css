@@ -1,0 +1,40 @@
+.app-nav{
+    background: var(--GRAY-COLOR-SHADE-LVL1);
+}
+.app-nav__title{
+    font-weight: var(--FONT-WEIGHT-NORMAL);
+    margin-bottom: var(--SMALL-SIZE);
+    font-size: var(--FONT-LARGE-V1);
+}
+/* this class exists in dashboardpage js file and is to only add a boldness to text. */
+.app-nav__bold {
+    font-weight: var(--FONT-WEIGHT-BOLDER);
+    /* exception  2.8rem no need variable.*/
+    font-size: 2.8rem;
+}
+.app-nav__list{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: var(--SMALL-SIZE);
+}
+
+.app-nav__list-item{
+    
+}
+
+.app-nav__link:any-link{
+    color: var(--PRIMARY-COLOR-TINT-LVL4);
+    text-decoration: none;
+    background: var(--PRIMARY-COLOR-SHADE-LVL2);
+    padding: var(--EXTRA-SMALL-SIZE);
+    font-size: var(--FONT-MEDIUM-V2);
+    border-radius: 5px;
+    font-weight: var(--FONT-WEIGHT-BOLD);
+    transition: var(--LINK-TRANSITION);
+}
+
+.app-nav__link:active,
+.app-nav__link:hover{
+    text-decoration: underline;
+}

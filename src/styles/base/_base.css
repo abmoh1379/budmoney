@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+    font-size: 50.0%;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    line-height: 1.4;
+    font-weight: 400;
+    color: #333;
+
+    overflow-x: hidden;
+}
+
+/* we add this container in Suspense in AppRoutes file in routers folder. we need it for centering the loader in the middle of the page. */
+.loader-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.nowrap {
+    white-space: nowrap;
+}
+
+img {
+    display: block;
+}
+
+input, button {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+@media only screen and (min-width : 576px){
+    html {
+        font-size: 56.25%;
+    }
+}
+
+@media only screen and (min-width : 920px) {
+    html {
+        font-size: 62.50%;
+    }
+}

@@ -1,0 +1,20 @@
+.app-filters{
+
+}
+.app-filters__input{
+    padding: var(--SMALL-SIZE);
+    border-radius: 5px;
+    border: 1px solid var(--GRAY-COLOR-SHADE-LVL4);
+    font-size: var(--MEDIUM-SIZE);
+    outline: none;
+    width: 100%;
+}
+
+.app-filters__input:focus{
+    outline: 2px solid var(--GRAY-COLOR-TINT-LVL5);
+}
+
+.DateRangePickerInput {
+    border-radius: 5px;
+    border: 1px solid var(--GRAY-COLOR-SHADE-LVL4);
+}

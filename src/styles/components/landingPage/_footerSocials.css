@@ -1,0 +1,39 @@
+.landing-footer__socials-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--MEDIUM-SIZE);
+}
+.landing-footer__socials-svgs {
+  display: flex;
+  flex-direction: row;
+  gap: var(--LARGE-SIZE);
+}
+.landing-footer__social-link:any-link {
+
+}
+
+.landing-footer__social-link:active .landing-footer__social-svg,
+.landing-footer__social-link:focus .landing-footer__social-svg,
+.landing-footer__social-link:hover .landing-footer__social-svg{
+  filter: invert(43%) sepia(78%) saturate(737%) hue-rotate(112deg)
+    brightness(106%) contrast(99%);
+}
+
+
+.landing-footer__social-svg-fig {
+  
+}
+
+.landing-footer__social-svg {
+  width: 100%;
+  height: auto;
+  width: 25px;
+  height: auto;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.landing-footer__copy-text {
+  color: var(--GRAY-COLOR-SHADE-LVL5);
+  font-size: var(--FONT-SMALL);
+}

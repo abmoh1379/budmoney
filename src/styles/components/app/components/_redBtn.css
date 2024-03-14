@@ -1,0 +1,16 @@
+.button--red{
+    font-size : var(--FONT-MEDIUM-V2);
+    padding: var(--EXTRA-SMALL-SIZE) var(--SMALL-SIZE);
+    background: var(--ERROR-COLOR);
+    color: var(--GRAY-COLOR-SHADE-LVL1); 
+}
+
+.button--red:hover,
+.button--red:focus{
+    color: #fff;
+    background: var(--ERROR-COLOR-TINT);     /* some darker color of the --ERROR-COLOR  VALUE */
+}
+
+.button--red:focus {
+    box-shadow: var(--BOX-SHADOW-RED-FOCUS);
+} 

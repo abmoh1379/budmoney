@@ -1,0 +1,27 @@
+.app-sign-up {
+  min-height: 100vh;
+  background: linear-gradient(
+    to right,
+    var(--PRIMARY-COLOR-TINT-LVL5),
+    var(--PRIMARY-COLOR-TINT-LVL4)
+  );
+  padding: var(--SMALL-SIZE) var(--MEDIUM-SIZE);
+}
+.app-sign-up__header {
+    margin-bottom: var(--SMALL-SIZE);
+}
+.app-sign-up__title {
+    color: var(--GRAY-COLOR-SHADE-LVL1);
+    font-weight: var(--FONT-WEIGHT-BOLDER);
+}
+.app-sign-up__title-link:any-link {
+    text-decoration: none;
+    color: var(--GRAY-COLOR-SHADE-LVL1);
+    font-weight: var(--FONT-WEIGHT-BOLDER);
+    font-size: var(--FONT-LARGE-V2);
+}
+
+.app-sign-up__title-link:active,
+.app-sign-up__title-link:hover{
+    /* no effects needed */
+}

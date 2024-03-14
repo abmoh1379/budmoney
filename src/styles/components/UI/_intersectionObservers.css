@@ -1,0 +1,42 @@
+/* located in landing page -> component InfoSection*/
+.landing-info__content {
+    transition: all 0.6s ease-in-out;
+} 
+.landing-info__content--not-obsereved{
+    transform: translateX(-20px);
+    opacity: 0;
+}
+.landing-info__content--obsereved{
+    transform: translateX(0px);
+    opacity: 1;
+}
+
+/* located in landing page -> component Hero */
+.landing-hero__content {
+    transition: all 1s ease-in-out;
+}
+
+.landing-hero__content--not-obsereved {
+    transform: translateY(-30px);
+    opacity: 0;
+}
+
+.landing-hero__content--obsereved {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+/* located in landing page -> component services */
+.landing-services__card {
+    transition: all 0.8s ease-in-out;
+}
+
+.landing-services__card--not-obsereved {
+    transform: translateY(-100px);
+    opacity: 0;
+}
+
+.landing-services__card--obsereved {
+    transform: translateY(0px);
+    opacity: 1;
+}

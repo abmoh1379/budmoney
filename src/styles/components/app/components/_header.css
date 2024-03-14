@@ -1,0 +1,21 @@
+.app-header{
+    background: var(--GRAY-COLOR-TINT-LVL2);
+    color: var(--GRAY-COLOR-SHADE-LVL1);
+}
+.app-header__title{
+
+}
+
+.app-header__title-link:any-link{
+    text-decoration: none;
+    color: inherit;
+    font-size: var(--FONT-LARGE-V2);
+}
+
+.app-header__title-link:active,
+.app-header__title-link:hover {
+
+}
+
+.app-header__title-link:focus {
+}

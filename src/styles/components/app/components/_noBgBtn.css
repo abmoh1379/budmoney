@@ -1,0 +1,18 @@
+.button-no-background{
+    border: none;
+    background: transparent;
+    color: var(--GRAY-COLOR-TINT-LVL5);
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: var(--FONT-WEIGHT-BOLD);
+    font-size : var(--FONT-MEDIUM-V2);
+    padding: var(--EXTRA-SMALL-SIZE) var(--SMALL-SIZE);
+
+    
+    transition: var(--BUTTON-TRANSITION);
+}
+
+.button-no-background:hover,
+.button-no-background:focus{
+    background: var(--GRAY-COLOR-SHADE-LVL2);
+}

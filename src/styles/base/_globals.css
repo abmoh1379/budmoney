@@ -1,0 +1,76 @@
+/* css variables for the application */
+
+:root {
+  /* colors */
+  /* gray color */
+  --gray-COLOR: #777;
+  --GRAY-COLOR-TINT-LVL5: #6B6B6B;
+  --GRAY-COLOR-TINT-LVL4: #535353;
+  --GRAY-COLOR-TINT-LVL3: #3C3C3C;
+  --GRAY-COLOR-TINT-LVL2: #242424;
+  --GRAY-COLOR-TINT-LVL1: #0C0C0C;
+
+  --GRAY-COLOR-SHADE-LVL1: #F1F1F1;
+  --GRAY-COLOR-SHADE-LVL2: #D6D6D6;
+  --GRAY-COLOR-SHADE-LVL3: #BBBBBB;
+  --GRAY-COLOR-SHADE-LVL4: #A0A0A0;
+  --GRAY-COLOR-SHADE-LVL5: #858585;
+
+
+  /* primary color */
+  --PRIMARY-COLOR: #01bf71;
+  --PRIMARY-COLOR-TINT-LVL5: #01ac66;
+  --PRIMARY-COLOR-TINT-LVL4: #01864f;
+  --PRIMARY-COLOR-TINT-LVL3: #016039;
+  --PRIMARY-COLOR-TINT-LVL2: #003922;
+  --PRIMARY-COLOR-TINT-LVL1: #00130b;
+
+  --PRIMARY-COLOR-SHADE-LVL1: #e6f9f1;
+  --PRIMARY-COLOR-SHADE-LVL2: #b3ecd4;
+  --PRIMARY-COLOR-SHADE-LVL3: #80dfb8;
+  --PRIMARY-COLOR-SHADE-LVL4: #4dd29c;
+  --PRIMARY-COLOR-SHADE-LVL5: #1ac57f;
+  /* error colors */
+  --ERROR-COLOR : rgb(204, 8, 8);
+  --ERROR-BACKGROUND : rgb(255, 208, 208);
+  --ERROR-COLOR-TINT : rgb(163, 1, 1);
+  --ERROR-BACKGROUND-TINT : rgb(227, 136, 136);
+  /* font-sizes */
+  --FONT-EXTRA-SMALL: 1.2rem;
+  --FONT-SMALL: 1.4rem;
+  --FONT-MEDIUM-V1: 1.6rem;
+  --FONT-MEDIUM-V2: 1.8rem;
+  --FONT-LARGE-V1: 2.2rem;
+  --FONT-LARGE-V2: 3.2rem;
+  --FONT-EXTRA-LARGE: 4.4rem;
+  /* general sizes */
+  --EXTRA-SMALL-SIZE: 0.6rem;
+  --SMALL-SIZE: 1.2rem;
+  --MEDIUM-SIZE: 1.6rem;
+  --LARGE-SIZE : 2.2rem;
+  --EXTRA-LARGE-SIZE: 3.2rem;
+  /* font weights */
+  --FONT-WEIGHT-LIGHT: 300;
+  --FONT-WEIGHT-NORMAL: 400;
+  --FONT-WEIGHT-BOLD: 500;
+  --FONT-WEIGHT-BOLDER: 700;
+  /* break points */
+  --EXTRA-SMALL-BREAKPOINT: 576px; /* anything below 576px */
+  --SMALL-BREAKPOINT: 576px;
+  --MEDIUM-BREAKPOINT: 768px;
+  --LARGE-BREAKPOINT: 920px;
+  --EXTRA-LARGE-BREAKPOINT: 1200px;
+  /* container layout values */
+  --CONTAINER-EXTRA-SMALL: 80rem;
+  --CONTAINER-SMALL: 90rem;
+  --CONTAINER-MEDIUM: 100rem;
+  --CONTAINER-LARGE: 110rem;
+  --CONTAINER-EXTRA-LARGE: 120rem;
+  /* transitions */
+  --BUTTON-TRANSITION: all 0.3s ease-in-out;
+  --LINK-TRANSITION: all 0.2s ease-in-out;
+  /* box-shadows */
+  --BOX-SHADOW-BLACK: 3px 3px 6px 6px rgba(0, 0, 0, 0.07);
+  --BOX-SHADOW-PRIMARY-FOCUS : 0px 0px 6px 6px var(--PRIMARY-COLOR-SHADE-LVL5);
+  --BOX-SHADOW-RED-FOCUS : 0px 0px 6px 6px var(--ERROR-BACKGROUND-TINT);
+}

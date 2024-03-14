@@ -1,0 +1,54 @@
+/* styles related to the classes added by react-modal */
+.ReactModal__Overlay{
+    opacity: 0;
+    transition: opacity 1000ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+    opacity: 0;
+}
+.app-modal {
+    min-width: 300px;
+    width: 90vw;
+    max-width: 450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    background: var(--GRAY-COLOR-SHADE-LVL1);
+    padding: var(--MEDIUM-SIZE);
+}
+.app-modal__content{
+    display: flex;
+    flex-direction: column;
+    gap: var(--MEDIUM-SIZE);
+}
+
+.app-modal__header{
+    
+}
+
+.app-modal__title{
+    font-size: var(--FONT-MEDIUM-V2);
+}
+
+.app-modal__body{
+
+}
+.app-modal__error-paragraph{
+    color: var(--ERROR-COLOR);
+    background: var(--ERROR-BACKGROUND);
+    font-size: var(--FONT-MEDIUM-V1);
+    padding: var(--SMALL-SIZE);
+    border-radius: 10px;
+}
+.app-modal__buttons{
+    display: flex;
+    gap: var(--SMALL-SIZE);
+    align-self: flex-end;
+}
