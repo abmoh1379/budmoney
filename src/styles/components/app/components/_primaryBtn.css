@@ -4,9 +4,12 @@
     font-size : var(--FONT-MEDIUM-V2);
     padding: var(--EXTRA-SMALL-SIZE) var(--SMALL-SIZE);
 }
+.button--primary:disabled {
+    cursor: not-allowed;
+}
 
-.button--primary:hover,
-.button--primary:focus{
+.button--primary:not(:disabled).button--primary:hover,
+.button--primary:not(:disabled).button--primary:focus{
     background: var(--PRIMARY-COLOR-TINT-LVL4);
     color: #fff;
 }

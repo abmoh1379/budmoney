@@ -1,0 +1,36 @@
+.app-verify-loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.app-verify-content{
+    display: flex;
+    flex-direction: column;
+    gap: var(--SMALL-SIZE);
+}
+
+.app-verify-content__title{
+    font-size: var(--FONT-LARGE-V1);
+}
+
+.app-verify-content__error{
+    font-size: var(--FONT-MEDIUM-V1);
+    color: var(--ERROR-COLOR);
+    background: var(--ERROR-BACKGROUND);
+    padding: var(--EXTRA-SMALL-SIZE);
+    font-weight: var(--FONT-WEIGHT-BOLD);
+}
+
+.app-verify-content__loading-msg {
+    text-align: center;
+    font-size: var(--FONT-MEDIUM-V1);
+    font-weight: var(--FONT-WEIGHT-BOLD);
+}
+
+.app-verify-content__msg {
+    font-size: var(--FONT-MEDIUM-V1);
+}
+.app-verify-content__bold-text {
+    font-weight: var(--FONT-WEIGHT-BOLDER);
+};

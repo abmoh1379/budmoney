@@ -23,6 +23,8 @@
 @import url(app/components/_expenseForm.css);
 @import url(app/components/_header.css);
 @import url(app/components/_appNavigation.css);
+@import url(app/components/_verifyEmail.css);
+@import url(app/components/_verifyEmail.css);
 @import url(loginAndSignup/pages/_login.css);
 @import url(loginAndSignup/pages/_signUp.css);
 @import url(loginAndSignup/components/_authForm.css);
