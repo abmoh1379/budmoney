@@ -7,7 +7,9 @@ import PrimaryBtn from "../app/UI/PrimaryBtn";
 import Loader from "../UI/Loader";
 
 const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp, onGoogleLogin }) => {
-  const { pathname } = useLocation();
+  // we rename the state to make things more clear, we adding this feature so that the user who accidently wrote in signup form but now
+  // wants to login, will still have inputs filled when visiting login page and vice-versa
+  const { pathname, state : linkState } = useLocation();
   const currentPage = pathname === "/sign-up" ? "sign-up" : "login";
   // Email useInput hook setup
   const emailInputValidator = useCallback((value) => {
@@ -28,7 +30,7 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
     error: emailError,
     isInputValid: isEmailValid,
     inputDispatcher: emailDispatcher,
-  } = useInput("", emailInputValidator);
+  } = useInput(!!linkState ? (linkState.email && linkState.email) : '', emailInputValidator);
 
   // Password useInput hook setup
   const passwordInputValidator = useCallback(
@@ -56,7 +58,7 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
     error: passwordError,
     isInputValid: isPasswordValid,
     inputDispatcher: passwordDispatcher,
-  } = useInput("", passwordInputValidator);
+  } = useInput(!!linkState ? (linkState.password && linkState.password) : '', passwordInputValidator);
 
   // Password useInput hook setup
   const confirmPasswordInputValidator = useCallback(
@@ -140,6 +142,10 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
   const googleBtnLabel =
     currentPage === "sign-up" ? "Sign up with google" : "Sign in with google";
   const formParagraphLinkTo = currentPage === "sign-up" ? "/login" : "/sign-up";
+  const linkStateData = {
+    email : !!emailValue ? emailValue : '',
+    password : !!passwordValue ? passwordValue : '', 
+  }
 
   return (
     <article className="form-container">
@@ -238,6 +244,7 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
         {formParagraph}
         <Link
           className="form-container__prargraph-link"
+          state={linkStateData}
           to={formParagraphLinkTo}
         >
           {formParagraphLink}
