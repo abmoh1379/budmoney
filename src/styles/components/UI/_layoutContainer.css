@@ -70,6 +70,14 @@
     padding-bottom: var(--MEDIUM-SIZE);
 }
 
+.container--verify-email {
+    max-width: 52rem;
+
+    padding-top: var(--MEDIUM-SIZE);
+    padding-bottom: var(--MEDIUM-SIZE);
+    box-shadow: var(--BOX-SHADOW-BLACK);
+}
+
 .container--app-nav {
     max-width: 90rem;
     padding-top: var(--LARGE-SIZE);
@@ -87,6 +95,7 @@
 
 .container--app-expenses-list {
     max-width: 90rem;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,6 +109,8 @@
 .container--app-edit-expense {
     max-width: 90rem;
 }
+
+
 
 @media only screen and (min-width : 576px){
     .container--expenses-filters{
@@ -126,4 +137,6 @@
         justify-items: center;
     }
 }
+
+
 

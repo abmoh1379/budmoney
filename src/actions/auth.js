@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   signInWithPopup,
+  sendEmailVerification
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebase/firebase";
 
@@ -57,3 +58,15 @@ export const startLogout = createAsyncThunk("auth/startLogout", async () => {
   } finally {
   }
 });
+
+
+export const startSendEmailVerification = createAsyncThunk('auth/startSendEmailVerification', async (undefined, {getState, dispatch}) => {
+  try {
+    // the res = undefined!
+    await sendEmailVerification(auth.currentUser);
+  } catch (e) {
+    
+  } finally {
+
+  }
+})

@@ -50,16 +50,23 @@ const renderApp = () => {
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    store.dispatch(login(user.uid));
+    const { uid, email, emailVerified } = user;
+    store.dispatch(
+      login({
+        uid,
+        emailVerified,
+        email,
+      })
+    );
     store
       .dispatch(startFetchUserExpenses())
       .unwrap()
       .then(() => {
         renderApp();
       });
-      // we dont wait untill expenses are fetched and then move to login page, we want to show some loading in expensesList. this is the standard and what user expects.
-      // the above mentioned is handeled only via privateRoute and publicRoute components. because when we update the client state
-      // with dispatch(login), the publicRoute will automatically send us to /dashboard without waiting for startFetch... to finish.
+    // we dont wait untill expenses are fetched and then move to login page, we want to show some loading in expensesList. this is the standard and what user expects.
+    // the above mentioned is handeled only via privateRoute and publicRoute components. because when we update the client state
+    // with dispatch(login), the publicRoute will automatically send us to /dashboard without waiting for startFetch... to finish.
   } else {
     renderApp();
     if (store.getState().auth.uid) {

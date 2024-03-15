@@ -4,12 +4,15 @@ import {
   startLogInWithEmailAndPassword,
   startLogout,
   startSignInWithGooglePopUp,
+  startSendEmailVerification
 } from "../actions/auth";
 
 const initialState = {
   uid: null,
   loading: false,
   error: null,
+  emailVerified: false,
+  email: null,
 };
 
 const auth = createSlice({
@@ -17,17 +20,25 @@ const auth = createSlice({
   initialState,
   reducers: {
     login: {
-      reducer: (state, { payload }) => {
-        state.uid = payload;
+      reducer: (state, { payload: { uid, emailVerified, email }}) => {
+        state.uid = uid;
+        state.emailVerified = emailVerified;
+        state.email = email;
       },
-      prepare: (id) => {
+      prepare: ({ uid, emailVerified, email }) => {
         return {
-          payload: id,
+          payload: {
+            uid,
+            emailVerified,
+            email,
+          },
         };
       },
     },
     logout: (state, action) => {
       state.uid = null;
+      state.emailVerified = false;
+      state.email = null;
     },
     resetErrorAndLoading: (state, action) => {
       state.error = null;
@@ -57,8 +68,8 @@ const auth = createSlice({
             state.error =
               "Popup has been closed by the user before finalizing the operation. Please try again!";
             break;
-            // the payload could only come from catch of asyncThunkFunction, so if the case does not exist, the payload is still some error with some code. we display the error code that firebase sends us.
-            default : state.error = payload;
+          // the payload could only come from catch of asyncThunkFunction, so if the case does not exist, the payload is still some error with some code. we display the error code that firebase sends us.
+          default : state.error = payload;
         }
       })
       .addCase(startSignInWithGooglePopUp.rejected, (state, action) => {
@@ -114,8 +125,8 @@ const auth = createSlice({
             case "auth/user-disabled":
               state.error = "User account is disabled!";
               break;
-                          // the payload could only come from catch of asyncThunkFunction, so if the case does not exist, the payload is still some error with some code. we display the error code that firebase sends us.
-              default : state.error = payload;
+            // the payload could only come from catch of asyncThunkFunction, so if the case does not exist, the payload is still some error with some code. we display the error code that firebase sends us.
+            default : state.error = payload;
           }
         }
       )
@@ -173,8 +184,9 @@ const auth = createSlice({
             case "auth/user-disabled":
               state.error = "User account is disabled!";
               break;
-                          // the payload could only come from catch of asyncThunkFunction, so if the case does not exist, the payload is still some error with some code. we display the error code that firebase sends us.
-              default : state.error = payload;
+            // the payload could only come from catch of asyncThunkFunction, so if the case does not exist, the payload is still some error with some code. we display the error code that firebase sends us.
+            default:
+              state.error = payload;
           }
         }
       )
@@ -191,12 +203,20 @@ const auth = createSlice({
       })
       .addCase(startLogout.rejected, (state, action) => {
         state.loading = false;
-      });
+      }).addCase(startSendEmailVerification.pending, (state, action) => {
+
+      }).addCase(startSendEmailVerification.fulfilled, (state, action) => {
+
+      }).addCase(startSendEmailVerification.rejected, (state, action) => {
+        
+      })
   },
 });
 
 export const selectUserId = (state) => state.auth.uid;
 export const selectAuthLoading = (state) => state.auth.loading;
 export const selectAuthError = (state) => state.auth.error;
+export const selectEmailVerified = (state) => state.auth.emailVerified;
+export const selectUserEmail = (state) => state.auth.email;
 export const { login, logout, resetErrorAndLoading } = auth.actions;
 export default auth.reducer;
