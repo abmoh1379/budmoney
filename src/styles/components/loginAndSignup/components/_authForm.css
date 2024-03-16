@@ -37,7 +37,16 @@
   align-items: center;
   gap: var(--LARGE-SIZE);
   width: 100%;
+
+  /* for hidden input */
+  position: relative;
 }
+/* a hidden form that needs to not be seen by user at any circumstances and to be able to be filled with bots. */
+.form-container__hidden-input {
+  position: absolute;
+  left: 100vw;
+}
+
 .form-container__input-container {
   width: 100%;
   display: flex;

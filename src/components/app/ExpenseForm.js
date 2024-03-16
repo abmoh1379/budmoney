@@ -14,13 +14,13 @@ const expenseFormReducer = (state, action) => {
         amountValue: action.value,
       };
 
-    case "ON_NOTE_CHANGE":
-      {
-        return {
-          ...state,
-          noteValue: action.value,
-        };
-      }
+    case "ON_NOTE_CHANGE": 
+    {
+      return {
+        ...state,
+        noteValue: action.value,
+      };
+    }
     case "ON_CREATED_AT_DATE_CHANGE": {
       return {
         ...state,
@@ -40,6 +40,8 @@ const ExpenseForm = ({
   requestStatus: { error, loading, operation },
   expense = undefined,
 }) => {
+  // this state is for the hidden input added for preventing bots to fill out forms and submit
+  const [hiddenInputValue, setHiddenInputValue] = useState("");
   //   required state for SingleDatePicker
   const [focused, setFocused] = useState(false);
 
@@ -53,6 +55,9 @@ const ExpenseForm = ({
   const [{ amountValue, noteValue, createdAtValue }, formDispatcher] =
     useReducer(expenseFormReducer, expenseFormInitialState);
 
+  const onHiddenInputChange = (e) => {
+    setHiddenInputValue(e.target.value);
+  };
   const onAmountChange = (e) => {
     if (/^\d{0,}\.?\d{0,2}$/.test(e.target.value)) {
       formDispatcher({ type: "ON_AMOUNT_CHANGE", value: e.target.value });
@@ -111,7 +116,7 @@ const ExpenseForm = ({
 
   // for disabling the form btn on form validation
   let isFormValid = false;
-  if (isDescriptionValid && isTypeValid) {
+  if (isDescriptionValid && isTypeValid && !hiddenInputValue) {
     isFormValid = true;
   }
 
@@ -128,7 +133,10 @@ const ExpenseForm = ({
   }
 
   const onExpenseRemoveClick = () => {
-    openConfirmRemoveExpenseModal();
+    // if bot filled the hidden input, we dont let expense removal.
+    if (!hiddenInputValue) {
+      openConfirmRemoveExpenseModal();
+    }
   };
 
   // this useEffect is needed for deleteing the expense on user clicking confirm in confirmation expense removal modal.
@@ -156,6 +164,12 @@ const ExpenseForm = ({
   };
   return (
     <form className="app-expense-form" onSubmit={onFormSubmit}>
+      <input
+        className="app-expense-form__hidden-input"
+        type="text"
+        value={hiddenInputValue}
+        onChange={onHiddenInputChange}
+      />
       <div className="app-expense-form__input-container">
         <input
           className={`app-expense-form__input${

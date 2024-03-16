@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { useLocation } from "react-router-dom";
@@ -7,10 +7,15 @@ import PrimaryBtn from "../app/UI/PrimaryBtn";
 import Loader from "../UI/Loader";
 
 const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp, onGoogleLogin }) => {
-  // we rename the state to make things more clear, we adding this feature so that the user who accidently wrote in signup form but now
-  // wants to login, will still have inputs filled when visiting login page and vice-versa
+  // this state is used for hidden input to validate if the form is being filled with bots.
+  const [hiddenInputValue, setHiddenInputValue] = useState('');
+  // we rename the state to make things more clear, we adding this feature so that the user who accidently wrote in signup form but now wants to login, will still have inputs filled when visiting login page and vice-versa
   const { pathname, state : linkState } = useLocation();
   const currentPage = pathname === "/sign-up" ? "sign-up" : "login";
+
+  const onHiddenInputChange = (e) => {
+    setHiddenInputValue(e.target.value);
+  }
   // Email useInput hook setup
   const emailInputValidator = useCallback((value) => {
     if (value.length === 0) {
@@ -85,11 +90,11 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
   //   checking if form is valid for enabling the btn and let submit happen
   let isFormValid = false;
   if (currentPage === "sign-up") {
-    if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+    if (isEmailValid && isPasswordValid && isConfirmPasswordValid && !hiddenInputValue) {
       isFormValid = true;
     }
   } else {
-    if (isEmailValid && isPasswordValid) {
+    if (isEmailValid && isPasswordValid && !hiddenInputValue) {
       isFormValid = true;
     }
   }
@@ -152,6 +157,13 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
       <h2 className="form-container__title">{containerTitle}</h2>
       <p className="form-container__error-message">{authError}</p>
       <form className="form-container__form" onSubmit={onFormSubmit}>
+        {/* this hidden input, could never be filled with a real user, so we use it as a way validating form being filled with bots.*/}
+        <input 
+          className="form-container__hidden-input"
+          type="text"
+          value={hiddenInputValue}
+          onChange={onHiddenInputChange}
+        />
         <section className="form-container__input-container">
           {/* we need this input-label-container for the effect of label we need.*/}
           <div className="form-container__input-label-container">
