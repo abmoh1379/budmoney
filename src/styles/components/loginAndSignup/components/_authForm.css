@@ -107,6 +107,15 @@
   padding-left: var(--SMALL-SIZE);
   font-weight: var(--FONT-WEIGHT-BOLD);
 }
+
+.form-container__recaptcha-error {
+  color: var(--ERROR-COLOR);
+  font-size: var(--FONT-MEDIUM-V1);
+  padding-left: var(--SMALL-SIZE);
+  font-weight: var(--FONT-WEIGHT-BOLD);
+  margin-top: var(--EXTRA-SMALL-SIZE);
+}
+
 .form-container__paragraph {
   font-size: var(--FONT-MEDIUM-V1);
   color: var(--GRAY-COLOR-TINT-LVL5);
