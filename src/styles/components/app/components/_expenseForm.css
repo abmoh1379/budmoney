@@ -2,6 +2,13 @@
     display: grid;
     grid-template-columns: 1fr;
     row-gap: var(--SMALL-SIZE);
+
+    /* for hidden input */
+    position: relative;
+}
+.app-expense-form__hidden-input {
+    position: absolute;
+    left: 100vw;
 }
 
 .app-expense-form__input-container{
