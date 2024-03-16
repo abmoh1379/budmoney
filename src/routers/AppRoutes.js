@@ -13,6 +13,8 @@ import NotFoundPage from "../pages/NotFoundPage";
 const LandingPageLazy = lazy(() => import("../pages/LandingPage"));
 const LoginPageLazy = lazy(() => import("../pages/LoginPage"));
 const SignUpLazy = lazy(() => import("../pages/SignUpPage"));
+const ForgotPasswordLazy = lazy(() => import('../pages/ForgotPassword'));
+
 
 const AppRoutes = () => {
   return (
@@ -23,6 +25,7 @@ const AppRoutes = () => {
           <Route index element={<LandingPageLazy />} />
           <Route path="login" element={<LoginPageLazy />} />
           <Route path="sign-up" element={<SignUpLazy />} />
+          <Route path="reset-password" element = {<ForgotPasswordLazy />} />
         </Route>
         {/* protected routes*/}
         <Route element={<PrivateRoute />}>

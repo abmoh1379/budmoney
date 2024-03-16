@@ -6,16 +6,31 @@ import useInput from "../../hooks/useInput";
 import PrimaryBtn from "../app/UI/PrimaryBtn";
 import Loader from "../UI/Loader";
 
-const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp, onGoogleLogin }) => {
+const AuthForm = ({
+  authLoading,
+  authError,
+  onAuthFormSubmittion,
+  onGoogleSignUp,
+  onGoogleLogin,
+  // setResetPassEmailSuccessMsg is for figuring out when the message is succesfully sent to the users email
+  setResetPassEmailSuccessMsg,
+  // this is a timer for send reset password email, to disable the btn for 60sec.
+  sendResetPassEmailTimer
+}) => {
   // this state is used for hidden input to validate if the form is being filled with bots.
-  const [hiddenInputValue, setHiddenInputValue] = useState('');
+  const [hiddenInputValue, setHiddenInputValue] = useState("");
   // we rename the state to make things more clear, we adding this feature so that the user who accidently wrote in signup form but now wants to login, will still have inputs filled when visiting login page and vice-versa
-  const { pathname, state : linkState } = useLocation();
-  const currentPage = pathname === "/sign-up" ? "sign-up" : "login";
+  const { pathname, state: linkState } = useLocation();
+  const currentPage =
+    pathname === "/sign-up"
+      ? "sign-up"
+      : pathname === "/login"
+      ? "login"
+      : "reset-password";
 
   const onHiddenInputChange = (e) => {
     setHiddenInputValue(e.target.value);
-  }
+  };
   // Email useInput hook setup
   const emailInputValidator = useCallback((value) => {
     if (value.length === 0) {
@@ -35,7 +50,10 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
     error: emailError,
     isInputValid: isEmailValid,
     inputDispatcher: emailDispatcher,
-  } = useInput(!!linkState ? (linkState.email && linkState.email) : '', emailInputValidator);
+  } = useInput(
+    !!linkState ? linkState.email && linkState.email : "",
+    emailInputValidator
+  );
 
   // Password useInput hook setup
   const passwordInputValidator = useCallback(
@@ -63,7 +81,10 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
     error: passwordError,
     isInputValid: isPasswordValid,
     inputDispatcher: passwordDispatcher,
-  } = useInput(!!linkState ? (linkState.password && linkState.password) : '', passwordInputValidator);
+  } = useInput(
+    !!linkState ? linkState.password && linkState.password : "",
+    passwordInputValidator
+  );
 
   // Password useInput hook setup
   const confirmPasswordInputValidator = useCallback(
@@ -90,11 +111,20 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
   //   checking if form is valid for enabling the btn and let submit happen
   let isFormValid = false;
   if (currentPage === "sign-up") {
-    if (isEmailValid && isPasswordValid && isConfirmPasswordValid && !hiddenInputValue) {
+    if (
+      isEmailValid &&
+      isPasswordValid &&
+      isConfirmPasswordValid &&
+      !hiddenInputValue
+    ) {
+      isFormValid = true;
+    }
+  } else if (currentPage === "login") {
+    if (isEmailValid && isPasswordValid && !hiddenInputValue) {
       isFormValid = true;
     }
   } else {
-    if (isEmailValid && isPasswordValid && !hiddenInputValue) {
+    if (isEmailValid && !hiddenInputValue) {
       isFormValid = true;
     }
   }
@@ -103,21 +133,29 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
     e.preventDefault();
 
     emailDispatcher({ type: "INPUT_TOUCHED_TRUE" });
-    passwordDispatcher({ type: "INPUT_TOUCHED_TRUE" });
     if (currentPage === "sign-up") {
       confirmPasswordDispatcher({ type: "INPUT_TOUCHED_TRUE" });
+      passwordDispatcher({ type: "INPUT_TOUCHED_TRUE" });
+    } else if (currentPage === "login") {
+      passwordDispatcher({ type: "INPUT_TOUCHED_TRUE" });
     }
 
-    if (isFormValid) {
+    if (isFormValid && (currentPage === "sign-up" || currentPage === "login")) {
       onAuthFormSubmittion({
         email: emailValue.trim(),
         password: passwordValue.trim(),
       });
+    } else if (isFormValid && currentPage === "reset-password") {
+      onAuthFormSubmittion(emailValue.trim());
     }
   };
 
   const containerTitle =
-    currentPage === "sign-up" ? "Create an account" : "Sign in to your account";
+    currentPage === "sign-up"
+      ? "Create an account"
+      : currentPage === "login"
+      ? "Sign in to your account"
+      : `Reset your account's password`;
 
   let formSubmitBtnText;
   if (currentPage === "sign-up") {
@@ -128,7 +166,7 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
     } else {
       formSubmitBtnText = "Sign up";
     }
-  } else {
+  } else if (currentPage === "login") {
     if (authLoading) {
       formSubmitBtnText = (
         <Loader spinerColor="#fff" spinnerWidth="27" spinnerHeight="27" />
@@ -136,29 +174,68 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
     } else {
       formSubmitBtnText = "Login";
     }
+  } else if (currentPage === "reset-password") {
+    if (authLoading) {
+      formSubmitBtnText = (
+        <Loader spinerColor="#fff" spinnerWidth="27" spinnerHeight="27" />
+      );
+    } else {
+      if(sendResetPassEmailTimer === -1) {
+        formSubmitBtnText = "Send Password Reset Email";
+      } else {
+        formSubmitBtnText = `Send Password Reset Email in ${sendResetPassEmailTimer}...`;
+      }
+    }
   }
 
+  // we disable the button for 60s after request for reset pass email
+  // we also need to disable the button while loading to avoid too many attempts and bugging the process.
+  let disableFormBtn = false;
+  if(currentPage === 'reset-password') {
+    if(sendResetPassEmailTimer === -1) {
+      disableFormBtn = false;
+    } else {
+      disableFormBtn = true;
+    }
+  } 
+  
+  if(authLoading) {
+    disableFormBtn = true;
+  }
+  
+  // we only use formParagraph for signup and login page.
   const formParagraph =
     currentPage === "sign-up"
       ? "Already have an account? "
       : `Doesn't have an account? `;
+
+  // we only use formParagraphLink for signup and login page.
   const formParagraphLink =
     currentPage === "sign-up" ? "Login here!" : "Sign up here!";
+  // we only use google button for signup and login page.
   const googleBtnLabel =
     currentPage === "sign-up" ? "Sign up with google" : "Sign in with google";
+  // we only use formParagraphLinkTo for signup and login page.
   const formParagraphLinkTo = currentPage === "sign-up" ? "/login" : "/sign-up";
+  // we only use linStateData for signup and login page.
   const linkStateData = {
-    email : !!emailValue ? emailValue : '',
-    password : !!passwordValue ? passwordValue : '', 
-  }
+    email: !!emailValue ? emailValue : "",
+    password: !!passwordValue ? passwordValue : "",
+  };
 
   return (
     <article className="form-container">
       <h2 className="form-container__title">{containerTitle}</h2>
-      <p className="form-container__error-message">{authError}</p>
+      {authError && (
+        <p className="form-container__error-message">{authError}</p>
+      )}
+      {/* we conditionally render this success msg, for it not being available in login and signup page.*/}
+      {!!setResetPassEmailSuccessMsg && (
+        <p className="form-container__success-message">{setResetPassEmailSuccessMsg}</p>
+      )}
       <form className="form-container__form" onSubmit={onFormSubmit}>
         {/* this hidden input, could never be filled with a real user, so we use it as a way validating form being filled with bots.*/}
-        <input 
+        <input
           className="form-container__hidden-input"
           type="text"
           value={hiddenInputValue}
@@ -185,27 +262,29 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
           </div>
           <p className="form-container__input-error">{emailError}</p>
         </section>
-        <section className="form-container__input-container">
-          {/* we need this input-label-container for the effect of label we need.*/}
-          <div className="form-container__input-label-container">
-            <input
-              className={`form-container__input${
-                passwordError ?" form-container__input--invalid" : ""
-              }`}
-              type="password"
-              placeholder=""
-              id="password"
-              autoComplete="off"
-              value={passwordValue}
-              onChange={onPasswordChange}
-              onBlur={onPasswordBlur}
-            />
-            <label className="form-container__input-label" htmlFor="password">
-              Password
-            </label>
-          </div>
-          <p className="form-container__input-error">{passwordError}</p>
-        </section>
+        {(currentPage === "login" || currentPage === "sign-up") && (
+          <section className="form-container__input-container">
+            {/* we need this input-label-container for the effect of label we need.*/}
+            <div className="form-container__input-label-container">
+              <input
+                className={`form-container__input${
+                  passwordError ? " form-container__input--invalid" : ""
+                }`}
+                type="password"
+                placeholder=""
+                id="password"
+                autoComplete="off"
+                value={passwordValue}
+                onChange={onPasswordChange}
+                onBlur={onPasswordBlur}
+              />
+              <label className="form-container__input-label" htmlFor="password">
+                Password
+              </label>
+            </div>
+            <p className="form-container__input-error">{passwordError}</p>
+          </section>
+        )}
         {/* we are allowed to conditionally render this due to login absolutely should not have the confirm password input*/}
         {currentPage === "sign-up" && (
           <section className="form-container__input-container">
@@ -213,9 +292,7 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
             <div className="form-container__input-label-container">
               <input
                 className={`form-container__input${
-                  confirmPasswordError
-                    ? " form-container__input--invalid"
-                    : ""
+                  confirmPasswordError ? " form-container__input--invalid" : ""
                 }`}
                 type="password"
                 placeholder=""
@@ -237,31 +314,55 @@ const AuthForm = ({ authLoading, authError, onAuthFormSubmittion, onGoogleSignUp
             </p>
           </section>
         )}
-        <PrimaryBtn className="button--flex-align-stretch" type="submit">
+        <PrimaryBtn className="button--flex-align-stretch" type="submit" disabled = {disableFormBtn}>
           {formSubmitBtnText}
         </PrimaryBtn>
-        <GoogleButton
-          label={googleBtnLabel}
-          type="dark"
-          onClick={() => {
-            if(currentPage === 'sign-up') {
-              onGoogleSignUp();
-            } else {
-              onGoogleLogin();
-            }
-          }}
-        />
+        {currentPage === "reset-password" && (
+          <p className="form-container__paragraph">
+            Changed your mind?{" "}
+          <Link className="form-container__prargraph-link" to="/login">
+            Login
+          </Link>
+          </p>
+        )}
+        {(currentPage === "login" || currentPage === "sign-up") && (
+          <GoogleButton
+            label={googleBtnLabel}
+            type="dark"
+            onClick={() => {
+              if (currentPage === "sign-up") {
+                onGoogleSignUp();
+              } else {
+                onGoogleLogin();
+              }
+            }}
+          />
+        )}
       </form>
-      <p className="form-container__paragraph">
-        {formParagraph}
-        <Link
-          className="form-container__prargraph-link"
-          state={linkStateData}
-          to={formParagraphLinkTo}
-        >
-          {formParagraphLink}
-        </Link>
-      </p>
+      {currentPage === "login" && (
+        <p className="form-container__paragraph">
+          Forgot your password?{" "}
+          <Link
+            className="form-container__prargraph-link"
+            to="/reset-password"
+            state={{ email: !!emailValue ? emailValue : "" }}
+          >
+            Click here!
+          </Link>
+        </p>
+      )}
+      {(currentPage === "login" || currentPage === "sign-up") && (
+        <p className="form-container__paragraph">
+          {formParagraph}
+          <Link
+            className="form-container__prargraph-link"
+            state={linkStateData}
+            to={formParagraphLinkTo}
+          >
+            {formParagraphLink}
+          </Link>
+        </p>
+      )}
     </article>
   );
 };

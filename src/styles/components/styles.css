@@ -27,4 +27,5 @@
 @import url(app/components/_verifyEmail.css);
 @import url(loginAndSignup/pages/_login.css);
 @import url(loginAndSignup/pages/_signUp.css);
+@import url(loginAndSignup/pages/_forgotPassword.css);
 @import url(loginAndSignup/components/_authForm.css);

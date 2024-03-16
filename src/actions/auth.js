@@ -4,7 +4,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   signInWithPopup,
-  sendEmailVerification
+  sendEmailVerification,
+  sendPasswordResetEmail
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebase/firebase";
 
@@ -30,6 +31,7 @@ export const startSignUpWithEmailAndPassword = createAsyncThunk(
       // we handle the switch case statement for different e.codes in auth slice.
       return e.code;
     } finally {
+
     }
   }
 );
@@ -66,6 +68,17 @@ export const startSendEmailVerification = createAsyncThunk('auth/startSendEmailV
     await sendEmailVerification(auth.currentUser);
   } catch (e) {
     
+  } finally {
+
+  }
+})
+
+export const startSendPasswordResetEmail = createAsyncThunk('auth/startSendPasswordResetEmail', async (userEmail, {getState, dispatch}) => {
+  try {
+    await sendPasswordResetEmail(auth, userEmail);
+  } catch (e) {
+      console.log(e.code);
+      return e.code;
   } finally {
 
   }

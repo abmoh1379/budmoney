@@ -4,7 +4,8 @@ import {
   startLogInWithEmailAndPassword,
   startLogout,
   startSignInWithGooglePopUp,
-  startSendEmailVerification
+  startSendEmailVerification,
+  startSendPasswordResetEmail,
 } from "../actions/auth";
 
 const initialState = {
@@ -20,7 +21,7 @@ const auth = createSlice({
   initialState,
   reducers: {
     login: {
-      reducer: (state, { payload: { uid, emailVerified, email }}) => {
+      reducer: (state, { payload: { uid, emailVerified, email } }) => {
         state.uid = uid;
         state.emailVerified = emailVerified;
         state.email = email;
@@ -69,7 +70,8 @@ const auth = createSlice({
               "Popup has been closed by the user before finalizing the operation. Please try again!";
             break;
           // the payload could only come from catch of asyncThunkFunction, so if the case does not exist, the payload is still some error with some code. we display the error code that firebase sends us.
-          default : state.error = payload;
+          default:
+            state.error = payload;
         }
       })
       .addCase(startSignInWithGooglePopUp.rejected, (state, action) => {
@@ -126,7 +128,8 @@ const auth = createSlice({
               state.error = "User account is disabled!";
               break;
             // the payload could only come from catch of asyncThunkFunction, so if the case does not exist, the payload is still some error with some code. we display the error code that firebase sends us.
-            default : state.error = payload;
+            default:
+              state.error = payload;
           }
         }
       )
@@ -203,13 +206,28 @@ const auth = createSlice({
       })
       .addCase(startLogout.rejected, (state, action) => {
         state.loading = false;
-      }).addCase(startSendEmailVerification.pending, (state, action) => {
-
-      }).addCase(startSendEmailVerification.fulfilled, (state, action) => {
-
-      }).addCase(startSendEmailVerification.rejected, (state, action) => {
-        
       })
+      .addCase(startSendEmailVerification.pending, (state, action) => {})
+      .addCase(startSendEmailVerification.fulfilled, (state, action) => {})
+      .addCase(startSendEmailVerification.rejected, (state, action) => {})
+      .addCase(startSendPasswordResetEmail.pending, (state, action) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(startSendPasswordResetEmail.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        if (payload) {
+          switch (payload) {
+            case "auth/network-request-failed":
+              state.error =
+                "A network request has failed. Please check your network connection!";
+              break;
+            default:
+              state.error = payload;
+          }
+        }
+      })
+      .addCase(startSendPasswordResetEmail.rejected, (state, action) => {});
   },
 });
 
