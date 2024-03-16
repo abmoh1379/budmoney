@@ -1,10 +1,47 @@
-import React, { useCallback, useState } from "react";
+import React, {
+  useCallback,
+  useState,
+  useReducer,
+  useRef,
+  useEffect,
+} from "react";
 import { Link } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 import GoogleButton from "react-google-button";
 import { useLocation } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import PrimaryBtn from "../app/UI/PrimaryBtn";
 import Loader from "../UI/Loader";
+
+const recaptchaReducer = (state, action) => {
+  switch (action.type) {
+    case "ON_RECAPTCHA_SUCCESS": {
+      return {
+        recaptchaIsValid: true,
+        recaptchaErrorMsg: "",
+      };
+    }
+    case "ON_RECAPTCHA_ERROR": {
+      return {
+        ...state,
+        recaptchaErrorMsg: action.payload,
+      };
+    }
+    case "ON_RECAPTCHA_RESET": {
+      return {
+        ...state,
+        recaptchaIsValid: false,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+const recaptchaInitialState = {
+  recaptchaIsValid: false,
+  recaptchaErrorMsg: "",
+};
 
 const AuthForm = ({
   authLoading,
@@ -17,6 +54,11 @@ const AuthForm = ({
   // this is a timer for send reset password email, to disable the btn for 60sec.
   sendResetPassEmailTimer
 }) => {
+  // this state is for validating and shwoing potential error on network issue the Recaptcha
+  const [{ recaptchaIsValid, recaptchaErrorMsg }, recaptchaDispatcher] =
+    useReducer(recaptchaReducer, recaptchaInitialState);
+  // this ref is used for reseting recaptcha validation after form got an error.
+  const recaptchaRef = useRef();
   // this state is used for hidden input to validate if the form is being filled with bots.
   const [hiddenInputValue, setHiddenInputValue] = useState("");
   // we rename the state to make things more clear, we adding this feature so that the user who accidently wrote in signup form but now wants to login, will still have inputs filled when visiting login page and vice-versa
@@ -108,6 +150,27 @@ const AuthForm = ({
     inputDispatcher: confirmPasswordDispatcher,
   } = useInput("", confirmPasswordInputValidator);
 
+  // recaptcha validation handling
+  const onRecaptchaChange = () => {
+    recaptchaDispatcher({ type: "ON_RECAPTCHA_SUCCESS" });
+  };
+
+  const onRecaptchaError = () => {
+    recaptchaDispatcher({
+      type: "ON_RECAPTCHA_ERROR",
+      payload:
+        "Recaptcha validator failed to load. Please check your network connection.",
+    });
+  };
+
+  // this useEffect handles the idea of making the user revalidate on every submit failure.
+  useEffect(() => {
+    if (!!authError) {
+      recaptchaDispatcher({ type: "ON_RECAPTCHA_RESET" });
+      recaptchaRef.current.reset();
+    }
+  }, [authError, recaptchaRef]);
+
   //   checking if form is valid for enabling the btn and let submit happen
   let isFormValid = false;
   if (currentPage === "sign-up") {
@@ -115,16 +178,22 @@ const AuthForm = ({
       isEmailValid &&
       isPasswordValid &&
       isConfirmPasswordValid &&
-      !hiddenInputValue
+      !hiddenInputValue &&
+      recaptchaIsValid
     ) {
       isFormValid = true;
     }
   } else if (currentPage === "login") {
-    if (isEmailValid && isPasswordValid && !hiddenInputValue) {
+    if (
+      isEmailValid &&
+      isPasswordValid &&
+      !hiddenInputValue &&
+      recaptchaIsValid
+    ) {
       isFormValid = true;
     }
   } else {
-    if (isEmailValid && !hiddenInputValue) {
+    if (isEmailValid && !hiddenInputValue && recaptchaIsValid) {
       isFormValid = true;
     }
   }
@@ -132,6 +201,12 @@ const AuthForm = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
 
+    if (!recaptchaIsValid) {
+      recaptchaDispatcher({
+        type: "ON_RECAPTCHA_ERROR",
+        payload: "Recaptcha validation is required!",
+      });
+    }
     emailDispatcher({ type: "INPUT_TOUCHED_TRUE" });
     if (currentPage === "sign-up") {
       confirmPasswordDispatcher({ type: "INPUT_TOUCHED_TRUE" });
@@ -180,7 +255,7 @@ const AuthForm = ({
         <Loader spinerColor="#fff" spinnerWidth="27" spinnerHeight="27" />
       );
     } else {
-      if(sendResetPassEmailTimer === -1) {
+      if (sendResetPassEmailTimer === -1) {
         formSubmitBtnText = "Send Password Reset Email";
       } else {
         formSubmitBtnText = `Send Password Reset Email in ${sendResetPassEmailTimer}...`;
@@ -191,18 +266,18 @@ const AuthForm = ({
   // we disable the button for 60s after request for reset pass email
   // we also need to disable the button while loading to avoid too many attempts and bugging the process.
   let disableFormBtn = false;
-  if(currentPage === 'reset-password') {
-    if(sendResetPassEmailTimer === -1) {
+  if (currentPage === "reset-password") {
+    if (sendResetPassEmailTimer === -1) {
       disableFormBtn = false;
     } else {
       disableFormBtn = true;
     }
-  } 
-  
-  if(authLoading) {
+  }
+
+  if (authLoading) {
     disableFormBtn = true;
   }
-  
+
   // we only use formParagraph for signup and login page.
   const formParagraph =
     currentPage === "sign-up"
@@ -231,7 +306,9 @@ const AuthForm = ({
       )}
       {/* we conditionally render this success msg, for it not being available in login and signup page.*/}
       {!!setResetPassEmailSuccessMsg && (
-        <p className="form-container__success-message">{setResetPassEmailSuccessMsg}</p>
+        <p className="form-container__success-message">
+          {setResetPassEmailSuccessMsg}
+        </p>
       )}
       <form className="form-container__form" onSubmit={onFormSubmit}>
         {/* this hidden input, could never be filled with a real user, so we use it as a way validating form being filled with bots.*/}
@@ -314,15 +391,35 @@ const AuthForm = ({
             </p>
           </section>
         )}
-        <PrimaryBtn className="button--flex-align-stretch" type="submit" disabled = {disableFormBtn}>
+        <section>
+          <ReCAPTCHA
+            sitekey="6LcYOpspAAAAAMzEKiBLy0O3VhTpM-dLq0zt-5UY"
+            onChange={onRecaptchaChange}
+            onErrored={onRecaptchaError}
+            ref={recaptchaRef}
+            onExpired={() => {
+              recaptchaRef.current.reset();
+            }}
+          />
+          {!!recaptchaErrorMsg && (
+            <p className="form-container__recaptcha-error">
+              {recaptchaErrorMsg}
+            </p>
+          )}
+        </section>
+        <PrimaryBtn
+          className="button--flex-align-stretch"
+          type="submit"
+          disabled={disableFormBtn}
+        >
           {formSubmitBtnText}
         </PrimaryBtn>
         {currentPage === "reset-password" && (
           <p className="form-container__paragraph">
             Changed your mind?{" "}
-          <Link className="form-container__prargraph-link" to="/login">
-            Login
-          </Link>
+            <Link className="form-container__prargraph-link" to="/login">
+              Login
+            </Link>
           </p>
         )}
         {(currentPage === "login" || currentPage === "sign-up") && (
