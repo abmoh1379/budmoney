@@ -1,6 +1,5 @@
 .container {
     margin: 0 auto;
-
     padding: 0 var(--LARGE-SIZE);
 }
 
@@ -110,6 +109,17 @@
     max-width: 90rem;
 }
 
+.container--not-found-header {
+    max-width: 120rem;
+    padding-top: var(--MEDIUM-SIZE);
+    padding-bottom: var(--MEDIUM-SIZE);
+}
+
+.container--not-found-main {
+    max-width: 120rem;
+    padding-top: var(--MEDIUM-SIZE);
+    padding-bottom: var(--MEDIUM-SIZE);
+}
 
 
 @media only screen and (min-width : 576px){
