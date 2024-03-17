@@ -1,8 +1,6 @@
 import ReactDOM from "react-dom/client";
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import CustomRouter from "./routers/CustomRouter";
-import history from "./routers/history";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase";
@@ -26,7 +24,7 @@ const loading = (
 
 const jsx = (
   <React.Fragment>
-    <CustomRouter history={history}>
+    <BrowserRouter>
       <Provider store={store}>
         <Routes>
           <Route element={<ErrorBoundry />}>
@@ -34,7 +32,7 @@ const jsx = (
           </Route>
         </Routes>
       </Provider>
-    </CustomRouter>
+    </BrowserRouter>
   </React.Fragment>
 );
 
