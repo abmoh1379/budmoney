@@ -10,7 +10,7 @@ export const startAddExpense = createAsyncThunk(
     try {
       // destructring expenseData and putting default values
       const {
-        description,
+        description = "",
         note = "",
         amount = 0,
         type = "Others",

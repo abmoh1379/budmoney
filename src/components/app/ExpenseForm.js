@@ -5,6 +5,7 @@ import useInput from "../../hooks/useInput";
 import PrimaryBtn from "./UI/PrimaryBtn";
 import RedBtn from "./UI/RedBtn";
 import Loader from "../UI/Loader";
+import usePrompt from "../../hooks/usePrompt";
 
 const expenseFormReducer = (state, action) => {
   switch (action.type) {
@@ -40,6 +41,8 @@ const ExpenseForm = ({
   requestStatus: { error, loading, operation },
   expense = undefined,
 }) => {
+  // state to figure out if expenseForm is dirty or not
+  const [isFormDirty, setIsFormDirty] = useState(false);
   // this state is for the hidden input added for preventing bots to fill out forms and submit
   const [hiddenInputValue, setHiddenInputValue] = useState("");
   //   required state for SingleDatePicker
@@ -142,6 +145,8 @@ const ExpenseForm = ({
   // this useEffect is needed for deleteing the expense on user clicking confirm in confirmation expense removal modal.
   useEffect(() => {
     if (confirmDeleteExpenseValue) {
+      // even if user changed things in edit expense page, we still let user delete expense on demand with formDirty = true
+      setIsFormDirty(false);
       onExpenseRemove();
     }
   }, [confirmDeleteExpenseValue, onExpenseRemove]);
@@ -149,6 +154,8 @@ const ExpenseForm = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
 
+    // we make the form undirty, because we need to navigate to dashboard page.
+    setIsFormDirty(false);
     descriptionDispatcher({ type: "INPUT_TOUCHED_TRUE" });
     typeDispatcher({ type: "INPUT_TOUCHED_TRUE" });
 
@@ -162,6 +169,52 @@ const ExpenseForm = ({
       });
     }
   };
+
+  // useEffect to detect if form is dirty or not!
+  useEffect(() => {
+    // if we are in editExpensePage
+    // why we use setTimeout? because we dont need to check on every keystroke and we do it after a bit of timeout, 
+    // now the key is, that in 99.9% of the users, the interaction is very useful.
+    const checkFormDirtyTimeOut = setTimeout(() => {
+      if (expense) {
+        if (
+          descriptionValue.trim() !== expense.description.trim() ||
+          amountValue !== (expense.amount / 100).toString() || // user cannot type space because of regx
+          typeValue !== expense.type ||
+          !createdAtValue.isSame(moment(expense.createdAt), "day") || // createdAtValue is a moment obj
+          noteValue.trim() !== expense.note.trim()
+        ) {
+          setIsFormDirty(true);
+        } else {
+          setIsFormDirty(false);
+        }
+      } else if (!expense) {
+        // if we are in addExpensePage
+        if (
+          descriptionValue.trim() !== "" ||
+          (amountValue !== "" && amountValue !== "0") ||
+          typeValue !== "Choose one of the options" ||
+          !createdAtValue.isSame(moment(), "day") ||
+          noteValue.trim() !== ""
+        ) {
+          setIsFormDirty(true);
+        } else {
+          setIsFormDirty(false);
+        }
+      }
+    }, 3000);
+
+    return () => {
+      clearTimeout(checkFormDirtyTimeOut)
+    }
+  }, [descriptionValue, amountValue, typeValue, createdAtValue, noteValue]); // no need to put expense, because it doesnt change!
+
+  // to open confirm prompt on refresh or change of page if form is dirty.
+  usePrompt(
+    "You have unsaved changes, Are you sure you want exit this page?",
+    isFormDirty
+  );
+
   return (
     <form className="app-expense-form" onSubmit={onFormSubmit}>
       <input
