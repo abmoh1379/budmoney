@@ -17,6 +17,7 @@
 @import url(app/pages/_addExpense.css);
 @import url(app/pages/_editExpense.css);
 @import url(app/pages/_dashboard.css);
+@import url(app/pages/_notFound.css);
 @import url(app/components/_expensesList.css);
 @import url(app/components/_expensesFilters.css);
 @import url(app/components/_expenseExcerpt.css);
@@ -25,6 +26,7 @@
 @import url(app/components/_appNavigation.css);
 @import url(app/components/_verifyEmail.css);
 @import url(app/components/_verifyEmail.css);
+@import url(app/components/_notFoundComponent.css);
 @import url(loginAndSignup/pages/_login.css);
 @import url(loginAndSignup/pages/_signUp.css);
 @import url(loginAndSignup/pages/_forgotPassword.css);

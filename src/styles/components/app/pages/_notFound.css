@@ -1,0 +1,24 @@
+.not-found{
+    min-height: 100vh;
+}
+.not-found__header{
+
+}
+
+.not-found__title{
+
+}
+.not-found__title-link:any-link{
+    font-size: var(--FONT-LARGE-V2);
+    text-decoration: none;
+    color: var(--GRAY-COLOR-TINT-LVL3);
+    font-weight: var(--FONT-WEIGHT-BOLDER);
+}
+
+.not-found__title-link:active,
+.not-found__title-link:hover{
+    /* no styles needed */
+}
+.not-found__title-link:focus {
+    /* no styles needed */
+}
