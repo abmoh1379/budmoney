@@ -8,7 +8,7 @@ const PrivateRoute = ({ uid, emailVerified }) => {
   let content;
   
   if(uid === null) {
-    content = <Navigate to= '/login' />;
+    content = <Navigate to= '/login' replace = {true}/>;
   } else {
     if(!emailVerified) {
       content = <Navigate to= '/email-verification' />
