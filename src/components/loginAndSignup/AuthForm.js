@@ -391,7 +391,7 @@ const AuthForm = ({
             </p>
           </section>
         )}
-        <section>
+        <section className="form-container__recaptcha-container">
           <ReCAPTCHA
             sitekey="6LcYOpspAAAAAMzEKiBLy0O3VhTpM-dLq0zt-5UY"
             onChange={onRecaptchaChange}
