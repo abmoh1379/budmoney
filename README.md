@@ -1,4 +1,5 @@
 # See the application on : budmoney.surge.sh
+make sure to use vpn due to google firebae backend and surge hosting is filtered, if you are visiting the site on Iran's network.
 
 # A web application to view and manage your daily, montly, and even yearly expenses.
 
