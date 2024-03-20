@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { connect, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import LayoutContainer from "../components/UI/LayoutContainer";
 import ExpenseForm from "../components/app/ExpenseForm";
 import { startEditExpense, startRemoveExpense } from "../actions/expenses";
@@ -130,18 +130,19 @@ const EditExpensePage = ({ startEditExpense, startRemoveExpense }) => {
           ];
         }, [])}
       />
-      <section className="app-expense-edit">
-        <LayoutContainer className= 'container--app-edit-expense'>
-          <ExpenseForm
-            openConfirmRemoveExpenseModal={openConfirmRemoveExpenseModal}
-            onExpenseFormSubmit={onExpenseFormSubmit}
-            requestStatus={requestStatus}
-            expense={expense}
-            onExpenseRemove={onExpenseRemove}
-            confirmDeleteExpenseValue={removeExpenseModal.confirmDelete}
-          />
-        </LayoutContainer>
-      </section>
+      {/* here, if use manually types some id of expense that does not exist, we make sure he gets redirected back to dashboard*/}
+      {expense ? <section className="app-expense-edit">
+      <LayoutContainer className="container--app-edit-expense">
+        <ExpenseForm
+          openConfirmRemoveExpenseModal={openConfirmRemoveExpenseModal}
+          onExpenseFormSubmit={onExpenseFormSubmit}
+          requestStatus={requestStatus}
+          expense={expense}
+          onExpenseRemove={onExpenseRemove}
+          confirmDeleteExpenseValue={removeExpenseModal.confirmDelete}
+        />
+      </LayoutContainer>
+    </section> : <Navigate to= '/dashboard' replace = {true}/>}
       {/* not conditionally rendering modal for accessibility and transition effect of the modal to work.*/}
       <AppModal
         isOpen={removeExpenseModal.showModal}
