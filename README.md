@@ -1,5 +1,5 @@
 # See the application on : budmoney.surge.sh
-if you are visiting the site using Iran's network, make sure to use vpn due to google firebase backend service and surge hosting is filtered for iranian users.
+if you are visiting the site on Iran's network, make sure to use vpn due to google firebase backend service and surge hosting are currently filtered for iranian internet users. 
 
 # A web application to view and manage your daily, montly, and even yearly expenses.
 
