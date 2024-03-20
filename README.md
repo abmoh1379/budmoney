@@ -1,4 +1,4 @@
-# See the application on : 
+# See the application on : budmoney.surge.sh
 
 # A web application to view and manage your daily, montly, and even yearly expenses.
 
@@ -6,7 +6,6 @@ the backend technology used in this application is firebase. real-time database 
 the web page consists of a landing-page, login/signup page, and the application itself.
 latest version of redux toolkit with the implementation of entityAdaptors is used for state-management.
 react-router v6 is used for handling client side routing.
-
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -18,8 +17,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Note: create the node_modules folder before running `npm start` command with `npm install` command.
+Note: create the node_modules folder before running `npm start` command with `npm install` command in application terminal.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
-You may also see any lint errors in the console.
