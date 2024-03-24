@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
+import {disableReactDevTools} from '@fvilers/disable-react-devtools';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase";
 import store from "./store/store";
@@ -15,6 +16,11 @@ import "react-dates/lib/css/_datepicker.css";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// disabling react-dev-tools in production
+if(process.env.NODE_ENV === 'production') {
+  disableReactDevTools();
+}
 
 const loading = (
   <div className="loader-container">

@@ -14,6 +14,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
+    devTools : false   // disabling dev tools for production
 });
 
 export default store;
